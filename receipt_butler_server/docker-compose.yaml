@@ -1,0 +1,44 @@
+services:
+  # Development services
+  postgres:
+    image: pgvector/pgvector:pg16
+    ports:
+      - "8090:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_DB: receipt_butler
+      POSTGRES_PASSWORD: "2nDpPfcEqO_LCh4L8lQ1RW8gjWF3rlvE"
+    volumes:
+      - receipt_butler_data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:6.2.6
+    ports:
+      - "8091:6379"
+    command: redis-server --requirepass "B8Q5NTVhnDw_gRvi2IxDFJQZVpyLceej"
+    environment:
+      - REDIS_REPLICATION_MODE=master
+
+  # Test services
+  postgres_test:
+    image: pgvector/pgvector:pg16
+    ports:
+      - "9090:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_DB: receipt_butler_test
+      POSTGRES_PASSWORD: "JNsQs1dN80dnvtB0P34nVZ2KzJE4M3KR"
+    volumes:
+      - receipt_butler_test_data:/var/lib/postgresql/data
+
+  redis_test:
+    image: redis:6.2.6
+    ports:
+      - "9091:6379"
+    command: redis-server --requirepass "fQr90e4Z_VECZ5VYJLOr1zq1lfkveFIG"
+    environment:
+      - REDIS_REPLICATION_MODE=master
+
+volumes:
+  receipt_butler_data:
+  receipt_butler_test_data:

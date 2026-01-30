@@ -1,0 +1,14 @@
+class: ClassificationResult
+fields:
+  hash: String
+  documentType: String
+  category: String?
+  confidence: double
+  merchantName: String?
+  senderName: String?
+  recipientName: String?
+  totalAmount: double?
+  currency: String?
+  transactionType: String?
+  transactionDate: DateTime?
+  summary: String?
