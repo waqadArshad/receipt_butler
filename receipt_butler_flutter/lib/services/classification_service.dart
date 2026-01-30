@@ -147,7 +147,7 @@ class ClassificationService {
       // Batch update local DB
       await db.transaction((txn) async {
         for (var receipt in serverReceipts) {
-          if (receipt.metadataHash == null) continue;
+          // if (receipt.metadataHash == null) continue;
 
           // Check if we have this image locally (by hash)
           final localRows = await txn.query(
@@ -159,7 +159,7 @@ class ClassificationService {
 
           if (localRows.isNotEmpty) {
             final row = localRows.first;
-            final currentStatus = row['processing_status'] as String;
+            // final currentStatus = row['processing_status'] as String;
 
             // Only update if local is NOT completed, OR we want to force refresh
             // Let's safe-guard: Update if local is processing, pending, OR failed

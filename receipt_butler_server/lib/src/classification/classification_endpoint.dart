@@ -41,7 +41,7 @@ class ClassificationEndpoint extends Endpoint {
           try {
             // Prepare Prompt
             // ... (same prompt building)
-            final prompt = _buildPrompt(task.ocrText);
+            // final prompt = _buildPrompt(task.ocrText);
 
             final response = await client
                 .post(

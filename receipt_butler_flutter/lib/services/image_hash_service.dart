@@ -1,8 +1,8 @@
 import 'dart:io';
 import 'dart:convert';
 import 'package:crypto/crypto.dart';
-import 'package:image_hash/image_hash.dart';
-import 'package:image/image.dart' as img;
+// import 'package:image_hash/image_hash.dart';
+// import 'package:image/image.dart' as img;
 
 class ImageHashes {
   final String metadataHash;
