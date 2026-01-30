@@ -2,14 +2,16 @@ import 'package:serverpod/serverpod.dart';
 import '../generated/protocol.dart';
 
 class ReceiptEndpoint extends Endpoint {
-  
   /// Store a receipt after classification
   Future<Receipt> storeReceipt(Session session, Receipt receipt) async {
     return await Receipt.db.insertRow(session, receipt);
   }
-  
+
   /// Batch store multiple receipts
-  Future<List<Receipt>> storeReceipts(Session session, List<Receipt> receipts) async {
+  Future<List<Receipt>> storeReceipts(
+    Session session,
+    List<Receipt> receipts,
+  ) async {
     final stored = <Receipt>[];
     for (var receipt in receipts) {
       try {
@@ -21,7 +23,7 @@ class ReceiptEndpoint extends Endpoint {
     }
     return stored;
   }
-  
+
   /// Get all receipts for a user
   Future<List<Receipt>> getUserReceipts(
     Session session, {
@@ -31,14 +33,15 @@ class ReceiptEndpoint extends Endpoint {
   }) async {
     return await Receipt.db.find(
       session,
-      where: (t) => userId != null ? t.userId.equals(userId) : Constant.bool(true),
+      where: (t) =>
+          userId != null ? t.userId.equals(userId) : Constant.bool(true),
       orderBy: (t) => t.processedAt,
       orderDescending: true,
       limit: limit,
       offset: offset,
     );
   }
-  
+
   /// Search receipts by text
   Future<List<Receipt>> searchReceipts(
     Session session,
@@ -48,9 +51,10 @@ class ReceiptEndpoint extends Endpoint {
     return await Receipt.db.find(
       session,
       where: (t) {
-        var condition = t.ocrText.like('%$query%') | 
-                       t.merchantName.like('%$query%') |
-                       t.category.like('%$query%');
+        var condition =
+            t.ocrText.like('%$query%') |
+            t.merchantName.like('%$query%') |
+            t.category.like('%$query%');
         if (userId != null) {
           condition = condition & t.userId.equals(userId);
         }
@@ -60,9 +64,12 @@ class ReceiptEndpoint extends Endpoint {
       orderDescending: true,
     );
   }
-  
+
   /// Get receipt by hash (for deduplication)
-  Future<Receipt?> getReceiptByHash(Session session, String metadataHash) async {
+  Future<Receipt?> getReceiptByHash(
+    Session session,
+    String metadataHash,
+  ) async {
     final results = await Receipt.db.find(
       session,
       where: (t) => t.metadataHash.equals(metadataHash),
@@ -70,7 +77,7 @@ class ReceiptEndpoint extends Endpoint {
     );
     return results.isNotEmpty ? results.first : null;
   }
-  
+
   /// Get receipts by date range
   Future<List<Receipt>> getReceiptsByDateRange(
     Session session,
