@@ -185,8 +185,8 @@ class ClassificationEndpoint extends Endpoint {
     );
   }
 
-  String _buildPrompt(String text) {
-    // Kept simple for now, handled in the request body usually
-    return text;
-  }
+  // String _buildPrompt(String text) {
+  //   // Kept simple for now, handled in the request body usually
+  //   return text;
+  // }
 }
